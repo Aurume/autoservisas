@@ -7,6 +7,11 @@ from .models import (Automobilis,
                      Uzsakymas,
                      Uzsakymo_eilute)
 
+# pakoreguot pagal masinais views
+class AutomobilisAdmin(admin.ModelAdmin):
+    list_display = ('klientas', 'automobilio_modelis_id', 'valstybinis_nr', 'vin_kodas')
+    list_filter = ('savininkas', 'automobilio_modelis_id')
+    search_fields = ('valstybinis_numeris', 'vin_kodas')
 
 class Uzsakymo_eiluteInLine(admin.TabularInline):
     model = Uzsakymo_eilute
