@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}HOME{% endblock %}
+
+{% block content %}
+<h1>Autoservisas</h1>
+<br><i>Sveiki atvykę į Pipiro autoservisą!</i><br>
+<br><b>Mūsų serviso statistika:</b><br>
+
+<ul>
+    <li><b>Jau suteikta paslaugų:</b> {{ num_paslaugu }}</li>
+    <li><b>Įvykdyta užsakymų:</b> {{ num_uzsakymai }}</li>
+    <li><b>Aptarnauta automobilių/klientų:</b> {{ num_automobiliai }}</li>
+</ul>
+{% endblock %}
