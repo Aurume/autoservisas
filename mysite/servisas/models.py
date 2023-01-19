@@ -40,7 +40,22 @@ class Uzsakymas(models.Model):
     data = models.DateTimeField(verbose_name='Data', auto_now_add=True, max_length=20, help_text='Užsakymo data?')
     automobilis = models.ForeignKey(to="Automobilis", on_delete=models.CASCADE)
 
-# paslaugu suma?
+    LOAN_STATUS = (
+        ('p', 'Patvirtinta'),
+        ('v', 'Vykdoma'),
+        ('a', 'Atšaukta'),
+        ('i', 'Įvykdyta'),
+    )
+
+    status = models.CharField(
+        max_length=1,
+        choices=LOAN_STATUS,
+        blank=True,
+        default='p',
+        help_text='Statusas',
+    )
+
+    # paslaugu suma?
     def suma(self):
         suma = 0
         eilutes = self.eilutes.all()
