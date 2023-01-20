@@ -9,12 +9,30 @@
 <p><b>Data: </b>{{ uzsakymas.data }}</p>
 <p><b>Užsakymo būsena: </b>{{ uzsakymas.get_status_display }}</p>
 <hr>
-<h4>Suteiktos paslaugos</h4>
-{% for eilute in uzsakymas.eilutes.all %}
-<p><b>Pavadinimas: </b>{{ eilute.paslauga.pavadinimas }}</p>
-<p><b>Kiekis: </b>{{ eilute.kiekis }} vnt.</p>
-<p><b>Kaina: </b>{{ eilute.kaina }} eur</p>
-{% endfor %}
-<hr>
-<p><b>Suma už suteiktas paslaugas: </b>{{ uzsakymas.suma }} eur</p>
+<table class="table table-hover">
+  <thead>
+    <tr class="table-info">
+      <th scope="col">Paslaugos pavadinimas:</th>
+      <th scope="col">Kiekis</th>
+      <th scope="col">Kaina</th>
+      <th scope="col">Viso:</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for eilute in uzsakymas.eilutes.all %}
+    <tr>
+      <th scope="row">{{eilute.paslauga.pavadinimas}}</th>
+      <td>{{eilute.kiekis}}</td>
+      <td>{{eilute.paslauga.kaina}}</td>
+      <td>{{eilute.kaina}}</td>
+    </tr>
+  {% endfor %}
+  <tr class="table-active">
+      <td colspan="3"><i><b>Bendra paslaugų suma: </b></i></td>
+      <th><i>{{uzsakymas.suma}}</i></th>
+  </tr>
+  </tbody>
+</table>
+
 {% endblock %}
+
