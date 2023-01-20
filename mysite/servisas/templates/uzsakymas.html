@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Užsakymai{% endblock %}
+
+{% block content %}
+<h4>Užsakymo numeris: {{ uzsakymas.id }}</h4>
+<p><b>Klientas: </b>{{ uzsakymas.automobilis.klientas}}</p>
+<p><b>Valstybiniai numeriai: </b>{{ uzsakymas.automobilis.valstybinis_nr }}</p>
+<p><b>Data: </b>{{ uzsakymas.data }}</p>
+<p><b>Užsakymo būsena: </b>{{ uzsakymas.get_status_display }}</p>
+<hr>
+<h4>Suteiktos paslaugos</h4>
+{% for eilute in uzsakymas.eilutes.all %}
+<p><b>Pavadinimas: </b>{{ eilute.paslauga.pavadinimas }}</p>
+<p><b>Kiekis: </b>{{ eilute.kiekis }} vnt.</p>
+<p><b>Kaina: </b>{{ eilute.kaina }} eur</p>
+{% endfor %}
+<hr>
+<p><b>Suma už suteiktas paslaugas: </b>{{ uzsakymas.suma }} eur</p>
+{% endblock %}

@@ -37,7 +37,7 @@ class Automobilis(models.Model):
 
 class Uzsakymas(models.Model):
     """Modelis, aprašantis taisymo užsakymus"""
-    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unikalus ID knygos kopijai')
+    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unikalus ID')
     data = models.DateTimeField(verbose_name='Data', auto_now_add=True, max_length=20, help_text='Užsakymo data?')
     automobilis = models.ForeignKey(to="Automobilis", on_delete=models.CASCADE)
 
