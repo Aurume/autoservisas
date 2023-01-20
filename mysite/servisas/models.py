@@ -22,6 +22,7 @@ class Automobilis(models.Model):
     automobilio_modelis = models.ForeignKey(to='AutomobilioModelis', on_delete=models.SET_NULL, null=True)
     vin_kodas = models.CharField(verbose_name='VIN kodas', max_length=17, help_text='Įveskite 17 skaitmenų kodą ')
     klientas = models.CharField(verbose_name='Klientas', max_length=80, help_text='Įveskite vardą ')
+    description = models.TextField(verbose_name="Aprašymas", max_length=3000, blank=True, default="")
 
     def __str__(self):
         return f"{self.automobilio_modelis} ({self.valstybinis_nr})"
