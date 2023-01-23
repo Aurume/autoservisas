@@ -3,6 +3,14 @@
 {% block title %}Automobilis{% endblock %}
 
 {% block content %}
+{% load static %}
+
+{% if automobilis.virselis %}
+  <img src="{{ automobilis.virselis.url }}" style="margin-bottom: 20px;" alt="...">
+{% else %}
+  <img src="{% static 'img/no-image.png' %}">
+{% endif %}
+
 <h1>Automobilio duomenys:</h1>
 <p>Klientas: {{ automobilis.klientas }}</p>
 <p>Modelis: {{ automobilis.automobilio_modelis }}</p>
