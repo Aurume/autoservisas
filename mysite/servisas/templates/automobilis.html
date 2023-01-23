@@ -5,17 +5,24 @@
 {% block content %}
 {% load static %}
 
+<div class="col-md-4 d-flex align-items-stretch">
+<div class="card mb-4 shadow-sm">
 {% if automobilis.virselis %}
-  <img src="{{ automobilis.virselis.url }}" style="margin-bottom: 20px;" alt="...">
+  <img src="{{ automobilis.virselis.url }}" class="card-img-top" alt="...">
 {% else %}
-  <img src="{% static 'img/no-image.png' %}">
+  <img src="{% static 'img/no-image.png' %}" class="card-img-top">
 {% endif %}
 
+<div class="card-body">
 <h1>Automobilio duomenys:</h1>
 <p>Klientas: {{ automobilis.klientas }}</p>
 <p>Modelis: {{ automobilis.automobilio_modelis }}</p>
 <p>Valstybinis nr: {{ automobilis.valstybinis_nr }}</p>
 <p>VIN kodas: {{ automobilis.vin_kodas }}</p>
+        </div>
+    </div>
+</div>
+
 <hr>
 <p>{{ automobilis.description }}</p>
 <hr>
