@@ -1,3 +1,5 @@
+from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from .models import Automobilis, Paslauga, Uzsakymas
 from django.views import generic
@@ -20,9 +22,11 @@ def index(request):
     return render(request, 'index.html', context=context)
 
 def automobiliai(request):
-    automobiliai = Automobilis.objects.all()
+    paginator = Paginator(Automobilis.objects.all(), 2) # po kiek vienam psl noriu kad rodytu auto
+    page_number = request.GET.get('page')
+    paged_automobiliai = paginator.get_page(page_number)
     context = {
-        'automobiliai': automobiliai
+        'automobiliai': paged_automobiliai
     }
     return render(request, 'automobiliai.html', context=context)
 
@@ -33,9 +37,17 @@ def automobilis(request, automobilis_id):
 class UzsakymaiListView(generic.ListView):
     model = Uzsakymas
     context_object_name = 'uzsakymai'
+    paginate_by = 2
     template_name = 'uzsakymai.html'
 
 class UzsakymasDetailView(generic.DetailView):
     model = Uzsakymas
     context_object_name = 'uzsakymas'
     template_name = 'uzsakymas.html'
+
+def search(request):
+    query = request.GET.get('query')
+    search_results = Automobilis.objects.filter(Q(klientas__icontains=query) | Q(automobilio_modelis__marke__icontains=query)
+                                                | Q(valstybinis_nr__icontains=query) | Q(vin_kodas__icontains=query)
+                                                )
+    return render(request, 'search.html', {'automobiliai': search_results, 'query': query})
