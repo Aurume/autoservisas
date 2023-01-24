@@ -11,12 +11,14 @@ def index(request):
     #num_instances_available = BookInstance.objects.filter(status__exact='g').count()
     num_uzsakymai = Uzsakymas.objects.filter(status__exact='i').count()
 
+    num_apsilankymai = request.session.get('num_apsilankymai', 1)
+    request.session['num_apsilankymai'] = num_apsilankymai + 1
 
     context = {
         "num_paslaugu": num_paslaugu,
-        #"num_instances_available": num_instances_available,
         "num_uzsakymai": num_uzsakymai,
         "num_automobiliai": num_automobiliai,
+        "num_apsilankymai": num_apsilankymai,
     }
 
     return render(request, 'index.html', context=context)
