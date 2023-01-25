@@ -9,6 +9,8 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from datetime import date, datetime
 
+from tinymce.models import HTMLField
+
 
 class AutomobilioModelis(models.Model):
     marke = models.CharField(verbose_name='Automobilio markė', max_length=80, help_text='Įveskite automobilio markę')
@@ -27,8 +29,9 @@ class Automobilis(models.Model):
     automobilio_modelis = models.ForeignKey(to='AutomobilioModelis', on_delete=models.SET_NULL, null=True)
     vin_kodas = models.CharField(verbose_name='VIN kodas', max_length=17, help_text='Įveskite 17 skaitmenų kodą ')
     klientas = models.CharField(verbose_name='Klientas', max_length=80, help_text='Įveskite vardą ')
-    description = models.TextField(verbose_name="Aprašymas", max_length=3000, blank=True, default="")
+    #description = models.TextField(verbose_name="Aprašymas", max_length=3000, blank=True, default="")
     virselis = models.ImageField('Viršelis', upload_to='covers', null=True)
+    description = HTMLField(verbose_name="Aprašymas", blank=True, null=True)
 
     def __str__(self):
         return f"{self.automobilio_modelis} ({self.valstybinis_nr})"
@@ -42,14 +45,14 @@ class Automobilis(models.Model):
         verbose_name_plural = 'Automobiliai'
 
 class Uzsakymas(models.Model):
-    """Modelis, aprašantis taisymo užsakymus"""
+    """Modelis, aprašantis automobilių taisymo užsakymus"""
     #id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unikalus ID')
     data = models.DateTimeField(verbose_name='Data', auto_now_add=True, max_length=20, help_text='Užsakymo data?')
     automobilis = models.ForeignKey(to="Automobilis", on_delete=models.SET_NULL, null=True, blank=True)
     terminas = models.DateTimeField(verbose_name='Grąžinti iki:', null=True, blank=True)
     vartotojas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
-    @property
+
     def baigesi_laikas(self):
         if self.baigesi_laikas and datetime.today().replace(tzinfo=utc) > self.baigesi_laikas(tzinfo=utc):
             return True
@@ -71,7 +74,6 @@ class Uzsakymas(models.Model):
         help_text='Statusas',
     )
 
-    # paslaugu suma?
     def suma(self):
         suma = 0
         eilutes = self.eilutes.all()

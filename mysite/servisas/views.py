@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
@@ -46,6 +47,14 @@ class UzsakymasDetailView(generic.DetailView):
     model = Uzsakymas
     context_object_name = 'uzsakymas'
     template_name = 'uzsakymas.html'
+
+class VartotojoUzsakymasListView(LoginRequiredMixin, generic.ListView):
+    model = Uzsakymas
+    template_name = 'vartotojo_uzsakymai.html'
+    paginate_by = 2
+
+    def get_queryset(self):
+        return Uzsakymas.objects.filter(vartotojas=self.request.user).order_by('terminas')
 
 def search(request):
     query = request.GET.get('query')

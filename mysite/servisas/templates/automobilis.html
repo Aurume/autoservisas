@@ -24,7 +24,7 @@
 </div>
 
 <hr>
-<p>{{ automobilis.description }}</p>
+<p>{{ automobilis.description | safe }}</p>
 <hr>
 <ol>
 {% for automobilis in automobilis.modelis.all %}
