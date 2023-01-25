@@ -7,7 +7,7 @@ from .models import (Automobilis,
                      Uzsakymas,
                      Uzsakymo_eilute)
 
-# pakoreguot pagal masinais views
+# pakoreguot pagal masinas views
 class AutomobilisAdmin(admin.ModelAdmin):
     list_display = ('klientas', 'automobilio_modelis_id', 'valstybinis_nr', 'vin_kodas')
     list_filter = ('savininkas', 'automobilio_modelis_id')
@@ -25,7 +25,10 @@ class Uzsakymo_eiluteAdmin(admin.ModelAdmin):
     # )
 
 class UzsakymasAdmin(admin.ModelAdmin):
-    list_display = ('automobilis', 'data', 'suma')
+    list_display = ('automobilis', 'data', 'suma', 'terminas', 'status', 'vartotojas')
+    # list_filter = ('status', 'due_back')
+    # search_fields = ('uuid', 'automobilis')
+    # list_editable = ('due_back', 'status', 'vartotojas')
     inlines = [Uzsakymo_eiluteInLine]
 
 

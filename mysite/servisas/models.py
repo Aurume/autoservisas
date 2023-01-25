@@ -1,8 +1,13 @@
+import uuid
+
 from django.db import models
 
 # Create your models here.
 from django.db import models
+from django.templatetags.tz import utc
 from django.urls import reverse
+from django.contrib.auth.models import User
+from datetime import date, datetime
 
 
 class AutomobilioModelis(models.Model):
@@ -40,7 +45,16 @@ class Uzsakymas(models.Model):
     """Modelis, aprašantis taisymo užsakymus"""
     #id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unikalus ID')
     data = models.DateTimeField(verbose_name='Data', auto_now_add=True, max_length=20, help_text='Užsakymo data?')
-    automobilis = models.ForeignKey(to="Automobilis", on_delete=models.CASCADE)
+    automobilis = models.ForeignKey(to="Automobilis", on_delete=models.SET_NULL, null=True, blank=True)
+    terminas = models.DateTimeField(verbose_name='Grąžinti iki:', null=True, blank=True)
+    vartotojas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+    @property
+    def baigesi_laikas(self):
+        if self.baigesi_laikas and datetime.today().replace(tzinfo=utc) > self.baigesi_laikas(tzinfo=utc):
+            return True
+        return False
+
 
     LOAN_STATUS = (
         ('p', 'Patvirtinta'),
