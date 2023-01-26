@@ -4,11 +4,17 @@
 
 {% block content %}
 <h1>Mano užsakymai:</h1>
+{% if uzsakymai %}
 {% for uzsakymas in uzsakymai %}
 <hr>
 
- <p><a class="{% if uzsakymai.baigesi_laikas %}text-danger{% endif %}" href="{% url 'uzsakymas' uzsakymas.pk %}">{{ uzsakymas }}</a></p>
-{% endfor %}
+ <a href="{% url 'uzsakymas' uzsakymas.pk %}">
+     <p class="{% if uzsakymas.baigesi_laikas %}text-danger{% endif %}">{{ uzsakymas }}</p>
+    </a>
+    {% endfor %}
+    {% else %}
+    <p>Užsakymų nerasta.</p>
+{% endif %}
 
  <div class="pagination">
     <span class="step-links">

@@ -1,16 +1,17 @@
 import uuid
 
+
 from django.db import models
 
 # Create your models here.
 from django.db import models
-from django.templatetags.tz import utc
 from django.urls import reverse
 from django.contrib.auth.models import User
 from datetime import date, datetime
-
+import pytz
 from tinymce.models import HTMLField
 
+utc = pytz.UTC
 
 class AutomobilioModelis(models.Model):
     marke = models.CharField(verbose_name='Automobilio markė', max_length=80, help_text='Įveskite automobilio markę')
@@ -52,16 +53,20 @@ class Uzsakymas(models.Model):
     terminas = models.DateTimeField(verbose_name='Grąžinti iki:', null=True, blank=True)
     vartotojas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
-
-    def baigesi_laikas(self):
-        if self.terminas and datetime.today() > self.terminas:
-            return True
-        return False
     # def baigesi_laikas(self):
     #     if self.terminas:
-    #         return self.terminas.replace(tzinfo=utc) < datetime.datetime.today().replace(tzinfo=utc)
+    #         return self.terminas < datetime.today()
     #     else:
     #         return False
+    # def baigesi_laikas(self):
+    #     if self.terminas and datetime.today() > self.terminas:
+    #         return True
+    #     return False
+    def baigesi_laikas(self):
+        if self.terminas:
+            return self.terminas.replace(tzinfo=utc) < datetime.today().replace(tzinfo=utc)
+        else:
+            return False
 
 
     LOAN_STATUS = (
