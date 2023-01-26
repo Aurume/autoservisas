@@ -71,8 +71,8 @@ class UzsakymasDetailView(FormMixin, generic.DetailView): #  sita klase perrasyt
             return self.form_invalid(form)
 
     def form_valid(self, form):
-        form.uzsakymas.uzsakymas = self.object
-        form.uzsakymas.vartotojas = self.request.user
+        form.instance.uzsakymas = self.object
+        form.instance.vartotojas = self.request.user
         form.save()
         return super(UzsakymasDetailView, self).form_valid(form)
 
