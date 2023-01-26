@@ -1,24 +1,31 @@
 {% extends "base.html" %}
 
+{% block title %}Mano užsakymai{% endblock %}
+
 {% block content %}
- {% load static %}
+<h1>Mano užsakymai:</h1>
+{% for uzsakymas in uzsakymai %}
+<hr>
 
-    <h1>Mano užsakymai: </h1>
+ <p><a class="{% if uzsakymai.baigesi_laikas %}text-danger{% endif %}" href="{% url 'uzsakymas' uzsakymas.pk %}">{{ uzsakymas }}</a></p>
+{% endfor %}
 
-    {% if uzsakymu_sarasas %}
-    <ul>
-      {% for uzsakymas in uzsakymu_sarasas %}
-<!-- neteisinga sita vieta-->
-      <li class="{% if uzsakymas.baigesi_laikas %}text-danger{% endif %}">
-        <a href="{% url 'vartotojo_uzsakymai' uzsakymas.automobilis.pk %}">
-            {{ uzsakymas.vartotojas}}
-            {uzsakymas.automobilis.marke}}</a> ({{ uzsakymas.terminas }})
-      </li>
+ <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; pirmas</a>
+            <a href="?page={{ page_obj.previous_page_number }}">atgal</a>
+        {% endif %}
 
-      {% endfor %}
-    </ul>
+        <span class="current">
+            {{ page_obj.number }} iš {{ page_obj.paginator.num_pages }}
+        </span>
 
-    {% else %}
-      <p>Užsakymų nerasta.</p>
-    {% endif %}
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">pirmyn</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">paskutinis &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}
+

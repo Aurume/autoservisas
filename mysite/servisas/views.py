@@ -52,6 +52,7 @@ class VartotojoUzsakymasListView(LoginRequiredMixin, generic.ListView):
     model = Uzsakymas
     template_name = 'vartotojo_uzsakymai.html'
     paginate_by = 2
+    context_object_name = "uzsakymai"
 
     def get_queryset(self):
         return Uzsakymas.objects.filter(vartotojas=self.request.user).order_by('terminas')
