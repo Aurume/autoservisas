@@ -26,7 +26,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 <div class="collapse navbar-collapse" id="navbarResponsive">
-    <ul class="navbar-nav mx-auto">
+    <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Pradžia</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'automobiliai' %}">Automobiliai</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'uzsakymai' %}">Užsakymai</a></li>
@@ -40,6 +40,7 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'vartotojo_uzsakymai'%}">Mano užsakymai </a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Atsijungti</a></li>
         {% else %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registruotis</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Prisijungti</a></li>
         {% endif %}
         <li>
