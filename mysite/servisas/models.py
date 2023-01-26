@@ -125,3 +125,14 @@ class Uzsakymo_eilute(models.Model):
     class Meta:
         verbose_name = 'Užsakymo eilutė'
         verbose_name_plural = 'Užsakymo eilutės'
+
+class UzsakymoApzvalga(models.Model):
+    uzsakymas_id = models.ForeignKey(to='Uzsakymas', verbose_name="Užsakymas", on_delete=models.SET_NULL, null=True, related_name='atsiliepimai')
+    klientas_id = models.ForeignKey(to=User, verbose_name="Vartotojas", on_delete=models.SET_NULL, null=True, blank=True)
+    date_created = models.DateTimeField('Sukūrimo data', auto_now_add=True)
+    atsiliepimas = models.TextField('Atsiliepimas', max_length=2000)
+
+    class Meta:
+        verbose_name = "Atsiliepimas"
+        verbose_name_plural = 'Atsiliepimai'
+        ordering = ['-date_created']

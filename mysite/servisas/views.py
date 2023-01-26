@@ -47,7 +47,7 @@ class UzsakymaiListView(generic.ListView):
     paginate_by = 2
     template_name = 'uzsakymai.html'
 
-class UzsakymasDetailView(generic.DetailView):
+class UzsakymasDetailView(generic.DetailView): # ko gero sita klase perrasyti reikia?
     model = Uzsakymas
     context_object_name = 'uzsakymas'
     template_name = 'uzsakymas.html'

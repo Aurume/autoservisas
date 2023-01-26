@@ -5,7 +5,7 @@ from .models import (Automobilis,
                      AutomobilioModelis,
                      Paslauga,
                      Uzsakymas,
-                     Uzsakymo_eilute)
+                     Uzsakymo_eilute, UzsakymoApzvalga)
 
 # pakoreguot pagal masinas views
 class AutomobilisAdmin(admin.ModelAdmin):
@@ -40,9 +40,12 @@ class AutomobilisAdmin(admin.ModelAdmin):
 class PaslaugaAdmin(admin.ModelAdmin):
     list_display = ('pavadinimas', 'kaina')
 
+class UzsakymoApzvalgaAdmin(admin.ModelAdmin):
+    list_display =  ('uzsakymas_id', 'klientas_id', 'date_created', 'atsiliepimas')
 
 admin.site.register(Automobilis, AutomobilisAdmin)
 admin.site.register(AutomobilioModelis)
 admin.site.register(Paslauga, PaslaugaAdmin)
 admin.site.register(Uzsakymas, UzsakymasAdmin)
 admin.site.register(Uzsakymo_eilute, Uzsakymo_eiluteAdmin)
+admin.site.register(UzsakymoApzvalga, UzsakymoApzvalgaAdmin)
