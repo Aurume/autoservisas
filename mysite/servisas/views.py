@@ -2,6 +2,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
+from .forms import UzsakymoApzvalgaForm
+from django.views.generic.edit import FormMixin
+
 from .models import Automobilis, Paslauga, Uzsakymas
 from django.views import generic
 from django.shortcuts import redirect
@@ -47,10 +51,31 @@ class UzsakymaiListView(generic.ListView):
     paginate_by = 2
     template_name = 'uzsakymai.html'
 
-class UzsakymasDetailView(generic.DetailView): # ko gero sita klase perrasyti reikia?
+class UzsakymasDetailView(FormMixin, generic.DetailView): #  sita klase perrasyti reikia?
     model = Uzsakymas
     context_object_name = 'uzsakymas'
     template_name = 'uzsakymas.html'
+    form_class = UzsakymoApzvalgaForm
+
+     # kur nuves sekmes atveju
+    def get_success_url(self):
+        return reverse('uzsakymai', kwargs={'pk': self.object.id})
+
+      # standartinis post metodo perrašymas, naudojant FormMixin, galite kopijuoti tiesiai į savo projektą.
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.uzsakymas.uzsakymas = self.object
+        form.uzsakymas.vartotojas = self.request.user
+        form.save()
+        return super(UzsakymasDetailView, self).form_valid(form)
+
 
 class VartotojoUzsakymasListView(LoginRequiredMixin, generic.ListView):
     model = Uzsakymas
