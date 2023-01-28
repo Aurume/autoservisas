@@ -7,11 +7,10 @@ from .models import (Automobilis,
                      Uzsakymas,
                      Uzsakymo_eilute, UzsakymoApzvalga)
 
-# pakoreguot pagal masinas views
 class AutomobilisAdmin(admin.ModelAdmin):
-    list_display = ('klientas', 'automobilio_modelis_id', 'valstybinis_nr', 'vin_kodas')
-    list_filter = ('savininkas', 'automobilio_modelis_id')
-    search_fields = ('valstybinis_numeris', 'vin_kodas')
+    list_display = ('klientas', 'automobilio_modelis', 'valstybinis_nr', 'vin_kodas')
+    list_filter = ('klientas', 'automobilio_modelis')
+    search_fields = ('valstybinis_nr', 'vin_kodas')
 
 class Uzsakymo_eiluteInLine(admin.TabularInline):
     model = Uzsakymo_eilute
@@ -32,16 +31,11 @@ class UzsakymasAdmin(admin.ModelAdmin):
     inlines = [Uzsakymo_eiluteInLine]
 
 
-class AutomobilisAdmin(admin.ModelAdmin):
-    list_display = ('klientas', 'automobilio_modelis', 'valstybinis_nr', 'vin_kodas')
-    list_filter = ('klientas', 'automobilio_modelis')
-    search_fields = ('valstybinis_nr', 'vin_kodas')
-
 class PaslaugaAdmin(admin.ModelAdmin):
     list_display = ('pavadinimas', 'kaina')
 
 class UzsakymoApzvalgaAdmin(admin.ModelAdmin):
-    list_display =  ('uzsakymas_id', 'klientas_id', 'date_created', 'atsiliepimas')
+    list_display = ('uzsakymas', 'vartotojas', 'date_created', 'atsiliepimas')
 
 admin.site.register(Automobilis, AutomobilisAdmin)
 admin.site.register(AutomobilioModelis)

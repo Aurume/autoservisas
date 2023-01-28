@@ -1,6 +1,6 @@
 import uuid
 
-
+from django.contrib.auth import get_user_model
 from django.db import models
 
 # Create your models here.
@@ -127,8 +127,8 @@ class Uzsakymo_eilute(models.Model):
         verbose_name_plural = 'Užsakymo eilutės'
 
 class UzsakymoApzvalga(models.Model):
-    uzsakymas_id = models.ForeignKey(to='Uzsakymas', verbose_name="Užsakymas", on_delete=models.SET_NULL, null=True, related_name='atsiliepimai')
-    klientas_id = models.ForeignKey(to=User, verbose_name="Vartotojas", on_delete=models.SET_NULL, null=True, blank=True)
+    uzsakymas = models.ForeignKey(Uzsakymas, verbose_name="Užsakymas", on_delete=models.SET_NULL, null=True, related_name='atsiliepimai')
+    vartotojas = models.ForeignKey(get_user_model(), verbose_name="Vartotojas", on_delete=models.SET_NULL, null=True, blank=True, related_name='vartotojas')
     date_created = models.DateTimeField('Sukūrimo data', auto_now_add=True)
     atsiliepimas = models.TextField('Atsiliepimas', max_length=2000)
 
@@ -136,3 +136,6 @@ class UzsakymoApzvalga(models.Model):
         verbose_name = "Atsiliepimas"
         verbose_name_plural = 'Atsiliepimai'
         ordering = ['-date_created']
+
+    def __str__(self) -> str:
+        return f"{self.vartotojas} on {self.uzsakymas} at {self.date_created}"

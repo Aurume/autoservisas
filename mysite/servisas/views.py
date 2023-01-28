@@ -51,15 +51,15 @@ class UzsakymaiListView(generic.ListView):
     paginate_by = 2
     template_name = 'uzsakymai.html'
 
-class UzsakymasDetailView(FormMixin, generic.DetailView): #  sita klase perrasyti reikia?
+class UzsakymasDetailView(FormMixin, generic.DetailView): #  ar tikrai sita klase perrasyti reikia?
     model = Uzsakymas
     context_object_name = 'uzsakymas'
     template_name = 'uzsakymas.html'
     form_class = UzsakymoApzvalgaForm
 
-     # kur nuves sekmes atveju
+
     def get_success_url(self):
-        return reverse('uzsakymai', kwargs={'pk': self.object.id})
+        return reverse('uzsakymas', kwargs={'pk': self.get_object().id})
 
       # standartinis post metodo perrašymas, naudojant FormMixin, galite kopijuoti tiesiai į savo projektą.
     def post(self, request, *args, **kwargs):
@@ -71,12 +71,18 @@ class UzsakymasDetailView(FormMixin, generic.DetailView): #  sita klase perrasyt
             return self.form_invalid(form)
 
     def form_valid(self, form):
-        form.instance.uzsakymas = self.object
+        form.instance.uzsakymas = self.get_object()
         form.instance.vartotojas = self.request.user
         form.save()
+        messages.success(self.request, 'Atsiliepimas nusiųstas')
         return super(UzsakymasDetailView, self).form_valid(form)
 
 
+    def get_initial(self):
+        return {
+            'uzsakymas': self.get_object(),
+            'vartotojas': self.request.user,
+        }
 class VartotojoUzsakymasListView(LoginRequiredMixin, generic.ListView):
     model = Uzsakymas
     template_name = 'vartotojo_uzsakymai.html'

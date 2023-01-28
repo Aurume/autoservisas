@@ -37,10 +37,10 @@
 </table>
 
 <h4>Atsiliepimai:</h4>
-  {% if uzsakymas.atsiliepimai.all %}
-    {% for atsiliepimas in uzsakymas.atsiliepimai.all %}
+{% if uzsakymas.atsiliepimai.all %}
+{% for atsiliepimas in uzsakymas.atsiliepimai.all %}
       <hr>
-      <strong>{{ atsiliepimas.klientas_id }}</strong>, <em>{{ atsiliepimas.date_created}}</em>
+      <strong>{{ atsiliepimas.vartotojas }}</strong>, <em>{{ atsiliepimas.date_created}}</em>
       <p>{{ atsiliepimas.atsiliepimas }}</p>
     {% endfor %}
   {% else %}
@@ -48,11 +48,11 @@
   {% endif %}
 {% if user.is_authenticated %}
 <div class="fieldWrapper">
-    <hr><br/>
+    <hr>
     <h4>Palikite atsiliepimą:</h4>
     <form action="" method="post">
         {% csrf_token %}
-        {{ form.atsiliepimas }}
+        {{ form.as_p }}
         <input type="submit" value="Siųsti">
     </form>
 </div>

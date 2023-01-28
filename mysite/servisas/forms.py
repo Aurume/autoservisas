@@ -4,5 +4,5 @@ from django import forms
 class UzsakymoApzvalgaForm(forms.ModelForm):
     class Meta:
         model = UzsakymoApzvalga
-        fields = ('atsiliepimas', 'uzsakymas_id', 'klientas_id',)
-        widgets = {'uzsakymas_id': forms.HiddenInput(), 'klientas_id': forms.HiddenInput()}
+        fields = ('uzsakymas', 'vartotojas', 'atsiliepimas')
+        widgets = {'uzsakymas': forms.HiddenInput(), 'vartotojas': forms.HiddenInput()}
