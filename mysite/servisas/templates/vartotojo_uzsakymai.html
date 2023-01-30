@@ -7,7 +7,7 @@
 {% if uzsakymai %}
 {% for uzsakymas in uzsakymai %}
 <hr>
-
+  <img class="rounded-circle" src="{{uzsakymas.user.profilis.foto.url}}">
  <a href="{% url 'uzsakymas' uzsakymas.pk %}">
      <p class="{% if uzsakymas.baigesi_laikas %}text-danger{% endif %}">{{ uzsakymas }}</p>
     </a>

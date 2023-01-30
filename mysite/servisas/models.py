@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from datetime import date, datetime
 import pytz
 from tinymce.models import HTMLField
+from PIL import Image
 
 utc = pytz.UTC
 
@@ -127,7 +128,7 @@ class Uzsakymo_eilute(models.Model):
         verbose_name_plural = 'Užsakymo eilutės'
 
 class UzsakymoApzvalga(models.Model):
-    uzsakymas = models.ForeignKey(Uzsakymas, verbose_name="Užsakymas", on_delete=models.SET_NULL, null=True, related_name='atsiliepimai')
+    uzsakymas = models.ForeignKey(Uzsakymas, verbose_name="Užsakymas", on_delete=models.SET_NULL, null=True, blank=True, related_name='atsiliepimai')
     vartotojas = models.ForeignKey(get_user_model(), verbose_name="Vartotojas", on_delete=models.SET_NULL, null=True, blank=True, related_name='vartotojas')
     date_created = models.DateTimeField('Sukūrimo data', auto_now_add=True)
     atsiliepimas = models.TextField('Atsiliepimas', max_length=2000)
@@ -139,3 +140,22 @@ class UzsakymoApzvalga(models.Model):
 
     def __str__(self) -> str:
         return f"{self.vartotojas} on {self.uzsakymas} at {self.date_created}"
+
+class Profilis(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    foto = models.ImageField(default="default.png", upload_to="profile_pics")
+
+    class Meta:
+        verbose_name = "Profilis"
+        verbose_name_plural = 'Profiliai'
+
+    def __str__(self):
+        return f"{self.user.username} profilis"
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.foto.path)
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.foto.path)
