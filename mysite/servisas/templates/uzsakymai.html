@@ -4,11 +4,14 @@
 
 {% block content %}
 <h1>Užsakymai:</h1>
+{% if uzsakymai %}
 {% for uzsakymas in uzsakymai %}
 <hr>
+        <img class="rounded-circle" src="{{uzsakymas.vartotojas.profilis.foto.url}}">
+        <a href="{% url 'uzsakymas' uzsakymas.pk %}">{{uzsakymas}}</a>
 
-<p><a href="{{ uzsakymas.id }}">{{ uzsakymas }}</a></p>
 {% endfor %}
+{% endif %}
 
  <div class="pagination">
     <span class="step-links">
