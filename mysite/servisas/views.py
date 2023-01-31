@@ -5,8 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from .forms import UzsakymoApzvalgaForm, UserUpdateForm, ProfilisUpdateForm
 from django.views.generic.edit import FormMixin
-from django.views.generic import ListView
-
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Automobilis, Paslauga, Uzsakymas
 from django.views import generic
 from django.shortcuts import redirect
@@ -163,3 +162,20 @@ class UzsakymaiVartotojoListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return Uzsakymas.objects.filter(vartotojas=self.request.user).order_by('terminas')
+
+
+class UzsakymaiVartotojoDetailView(LoginRequiredMixin, DetailView):
+    model = Uzsakymas
+    template_name = 'vartotojo_uzsakymas.html'
+    context_object_name = 'vienas-uzsakymas'
+
+class UzsakymaiVartotojoCreateView(LoginRequiredMixin, CreateView):
+    model = Uzsakymas
+    fields = ['automobilis', 'terminas']
+    success_url = "/servisas/vartotojouzsakymai/"
+    template_name = 'vartotjo_uzsakymas_form.html'
+
+    def form_valid(self, form):
+        form.instance.klientas = self.request.user # ar vartotojas?
+        form.save()
+        return super().form_valid(form)
