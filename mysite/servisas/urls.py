@@ -14,4 +14,5 @@ urlpatterns = [
     path('profilis/', views.profilis, name='profilis'),
     path('vartotojouzsakymai/<int:pk>', views.UzsakymaiVartotojoDetailView.as_view(), name='vartotojo-uzsakymai'),
     path('vartotojouzsakymai/sukurti', views.UzsakymaiVartotojoCreateView.as_view(), name='sukurti-nauja'),
+    path('vartotojouzsakymai/<int:pk>/redaguoti', views.UzsakymaiVartotojoUpdateView.as_view(), name='redaguoti-uzsakyma'),
 ]

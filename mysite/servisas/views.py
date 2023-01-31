@@ -5,7 +5,6 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from .forms import UzsakymoApzvalgaForm, UserUpdateForm, ProfilisUpdateForm
 from django.views.generic.edit import FormMixin
-from django.views.generic import ListView, DetailView, CreateView
 from .models import Automobilis, Paslauga, Uzsakymas
 from django.views import generic
 from django.shortcuts import redirect
@@ -13,7 +12,8 @@ from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 # Create your views here.
 
 def index(request):
@@ -154,7 +154,7 @@ def profilis(request):
     }
     return render(request, 'profilis.html', context)
 
-class UzsakymaiVartotojoListView(LoginRequiredMixin, ListView):
+class VartotojoUzsakymaListView(LoginRequiredMixin, ListView):
     model = Uzsakymas
     context_object_name = 'uzsakymas'
     template_name = 'vartotojo_uzsakymas.html'
@@ -173,9 +173,23 @@ class UzsakymaiVartotojoCreateView(LoginRequiredMixin, CreateView):
     model = Uzsakymas
     fields = ['automobilis', 'terminas']
     success_url = "/servisas/vartotojouzsakymai/"
-    template_name = 'vartotjo_uzsakymas_form.html'
+    template_name = 'vartotojo_uzsakymas_form.html'
 
     def form_valid(self, form):
         form.instance.klientas = self.request.user # ar vartotojas?
         form.save()
         return super().form_valid(form)
+
+class UzsakymaiVartotojoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Uzsakymas
+    fields = ['automobilis', 'terminas']
+    success_url = "/servisas/vartotojouzsakymai/"
+    template_name = 'vartotojo_uzsakymas_form.html'
+
+    def form_valid(self, form):
+        form.instance.klientas = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        uzsakymas = self.get_object()
+        return self.request.user == uzsakymas.klientas

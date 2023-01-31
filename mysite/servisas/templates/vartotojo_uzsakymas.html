@@ -12,6 +12,13 @@
     <img src="{% static 'img/no-image.png' %}">
 {% endif %}
 
+
+{% if object.klientas == user %}
+<div>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'redaguoti-uzsakyma' object.id %}">Redaguoti</a>
+</div>
+{% endif %}
+
  <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
