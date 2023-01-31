@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from .forms import UzsakymoApzvalgaForm, UserUpdateForm, ProfilisUpdateForm
 from django.views.generic.edit import FormMixin
+from django.views.generic import ListView
 
 from .models import Automobilis, Paslauga, Uzsakymas
 from django.views import generic
@@ -13,6 +14,7 @@ from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 def index(request):
@@ -75,7 +77,7 @@ class UzsakymasDetailView(FormMixin, generic.DetailView): #  ar tikrai sita klas
         form.instance.uzsakymas = self.get_object()
         form.instance.vartotojas = self.request.user
         form.save()
-        messages.success(self.request, 'Atsiliepimas nusiųstas')
+        messages.success(self.request, 'Atsiliepimas sėkmingai nusiųstas!')
         return super(UzsakymasDetailView, self).form_valid(form)
 
 
@@ -152,3 +154,12 @@ def profilis(request):
         'p_form': p_form,
     }
     return render(request, 'profilis.html', context)
+
+class UzsakymaiVartotojoListView(LoginRequiredMixin, ListView):
+    model = Uzsakymas
+    context_object_name = 'uzsakymas'
+    template_name = 'vartotojo_uzsakymas.html'
+    paginate_by = 4
+
+    def get_queryset(self):
+        return Uzsakymas.objects.filter(vartotojas=self.request.user).order_by('terminas')

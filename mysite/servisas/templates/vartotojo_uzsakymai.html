@@ -7,9 +7,11 @@
 {% if uzsakymai %}
 {% for uzsakymas in uzsakymai %}
 <hr>
-
- <a href="{% url 'uzsakymas' uzsakymas.pk %}">
+    <img class="rounded-circle" src="{{uzsakymas.automobilis.virselis.url}}">
+    <a href="{% url 'uzsakymas' uzsakymas.pk %}">
      <p class="{% if uzsakymas.baigesi_laikas %}text-danger{% endif %}">{{ uzsakymas }}</p>
+    <br/>
+
     </a>
     {% endfor %}
     {% else %}
