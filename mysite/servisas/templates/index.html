@@ -1,16 +1,16 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% block title %}HOME{% endblock %}
 
 {% block content %}
 <!--<h1>Autoservisas</h1>-->
-<h3><i>Sveiki atvykę į Pipiro autoservisą!</i></h3>
-<br><b>Mūsų serviso statistika:</b><br>
+<h3><i>{% trans "Welcome to 'Pipiro' autoservice!" %}</i></h3>
+<br><b>{% trans "Our service statistics:" %}</b><br>
 
 <ul>
-    <li><b>Jau suteikta paslaugų:</b> {{ num_paslaugu }}</li>
-    <li><b>Įvykdyta užsakymų:</b> {{ num_uzsakymai }}</li>
-    <li><b>Aptarnauta automobilių/klientų:</b> {{ num_automobiliai }}</li>
+    <li><b>{% trans "Services already provided:" %}</b> {{ num_paslaugu }}</li>
+    <li><b>{% trans "Orders fulfilled:" %}</b> {{ num_uzsakymai }}</li>
+    <li><b>{% trans "Cars/Customers Serviced:" %}</b> {{ num_automobiliai }}</li>
 </ul>
-<p>Čia jūs lankotės {{ num_apsilankymai }}-ą kartą.</p>
+<p> {% trans "Your visits: "%}{{ num_apsilankymai }}</p>
 {% endblock %}
