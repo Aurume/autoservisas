@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from .forms import UzsakymoApzvalgaForm, UserUpdateForm, ProfilisUpdateForm
+from .forms import UzsakymoApzvalgaForm, UserUpdateForm, ProfilisUpdateForm, VartotojoUzsakymaiKurtiForm
 from django.views.generic.edit import FormMixin
 from .models import Automobilis, Paslauga, Uzsakymas
 from django.views import generic
@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 # Create your views here.
 
 def index(request):
@@ -167,29 +167,43 @@ class VartotojoUzsakymaListView(LoginRequiredMixin, ListView):
 class UzsakymaiVartotojoDetailView(LoginRequiredMixin, DetailView):
     model = Uzsakymas
     template_name = 'vartotojo_uzsakymas.html'
-    context_object_name = 'vienas-uzsakymas'
+    #context_object_name = 'vienas-uzsakymas'
 
 class UzsakymaiVartotojoCreateView(LoginRequiredMixin, CreateView):
     model = Uzsakymas
-    fields = ['automobilis', 'terminas']
+    fields = ['automobilis', 'terminas', 'status']
     success_url = "/servisas/vartotojouzsakymai/"
     template_name = 'vartotojo_uzsakymas_form.html'
+    #form_class = VartotojoUzsakymaiKurtiForm
 
     def form_valid(self, form):
-        form.instance.klientas = self.request.user # ar vartotojas?
+        form.instance.vartotojas = self.request.user
         form.save()
         return super().form_valid(form)
 
 class UzsakymaiVartotojoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Uzsakymas
-    fields = ['automobilis', 'terminas']
-    success_url = "/servisas/vartotojouzsakymai/"
+    fields = ['automobilis', 'terminas', 'status']
+    #success_url = "/servisas/vartotojouzsakymai/"
     template_name = 'vartotojo_uzsakymas_form.html'
 
+    def get_success_url(self):
+        return reverse("uzsakymas", kwargs={"pk": self.object.id})
+
     def form_valid(self, form):
-        form.instance.klientas = self.request.user
+        form.instance.vartotojas = self.request.user
         return super().form_valid(form)
 
     def test_func(self):
         uzsakymas = self.get_object()
-        return self.request.user == uzsakymas.klientas
+        return self.request.user == uzsakymas.vartotojas
+
+class UzsakymaiVartotojoDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Uzsakymas
+    success_url = "/servisas/vartotojouzsakymai/"
+    template_name = 'vartotojo_uzsakymas_trinti.html'
+    context_object_name = 'uzsakymas'
+
+    def test_func(self):
+        uzsakymas = self.get_object()
+        return self.request.user == uzsakymas.vartotojas
