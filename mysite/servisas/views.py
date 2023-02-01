@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from .forms import UzsakymoApzvalgaForm, UserUpdateForm, ProfilisUpdateForm, VartotojoUzsakymaiKurtiForm
+from .forms import UzsakymoApzvalgaForm, UserUpdateForm, ProfilisUpdateForm, UzsakymaiVartotojoCreateUpdateForm
 from django.views.generic.edit import FormMixin
 from .models import Automobilis, Paslauga, Uzsakymas
 from django.views import generic
@@ -171,21 +171,22 @@ class UzsakymaiVartotojoDetailView(LoginRequiredMixin, DetailView):
 
 class UzsakymaiVartotojoCreateView(LoginRequiredMixin, CreateView):
     model = Uzsakymas
-    fields = ['automobilis', 'terminas', 'status']
+    #fields = ['automobilis', 'terminas', 'status']
     success_url = "/servisas/vartotojouzsakymai/"
     template_name = 'vartotojo_uzsakymas_form.html'
-    #form_class = VartotojoUzsakymaiKurtiForm
+    form_class = UzsakymaiVartotojoCreateUpdateForm
 
     def form_valid(self, form):
         form.instance.vartotojas = self.request.user
         form.save()
         return super().form_valid(form)
 
-class UzsakymaiVartotojoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class UzsakymaiVartotojoUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = Uzsakymas
-    fields = ['automobilis', 'terminas', 'status']
+    #fields = ['automobilis', 'terminas', 'status']
     #success_url = "/servisas/vartotojouzsakymai/"
     template_name = 'vartotojo_uzsakymas_form.html'
+    form_class = UzsakymaiVartotojoCreateUpdateForm
 
     def get_success_url(self):
         return reverse("uzsakymas", kwargs={"pk": self.object.id})
@@ -198,7 +199,7 @@ class UzsakymaiVartotojoUpdateView(LoginRequiredMixin, UserPassesTestMixin, Upda
         uzsakymas = self.get_object()
         return self.request.user == uzsakymas.vartotojas
 
-class UzsakymaiVartotojoDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class UzsakymaiVartotojoDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
     model = Uzsakymas
     success_url = "/servisas/vartotojouzsakymai/"
     template_name = 'vartotojo_uzsakymas_trinti.html'
@@ -207,3 +208,5 @@ class UzsakymaiVartotojoDeleteView(LoginRequiredMixin, UserPassesTestMixin, Dele
     def test_func(self):
         uzsakymas = self.get_object()
         return self.request.user == uzsakymas.vartotojas
+
+

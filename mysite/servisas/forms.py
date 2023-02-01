@@ -22,8 +22,12 @@ class ProfilisUpdateForm(forms.ModelForm):
         model = Profilis
         fields = ['foto']
 
-class VartotojoUzsakymaiKurtiForm(forms.ModelForm):
+
+class ManoDateTimeInput(forms.DateTimeInput):
+    input_type = 'datetime-local'
+
+class UzsakymaiVartotojoCreateUpdateForm(forms.ModelForm):
     class Meta:
         model = Uzsakymas
-        fields = ['automobilis', 'vartotojas', 'terminas']
-        widgets = {'vartotojas': forms.HiddenInput(), 'terminas': DateInput()}
+        fields = ['automobilis', 'terminas', 'status']
+        widgets = {'terminas': ManoDateTimeInput()}

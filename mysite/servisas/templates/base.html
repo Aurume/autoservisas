@@ -39,7 +39,7 @@
             </svg>
         {{ user.get_username }}</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'vartotojo_uzsakymai'%}">Mano užsakymai </a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'sukurti-nauja'%}?next=/servisas">Naujas</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'sukurti-nauja'%}">Naujas užsakymas</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Atsijungti</a></li>
         {% else %}
         <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registruotis</a></li>
