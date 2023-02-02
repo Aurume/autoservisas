@@ -1,31 +1,31 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block title %}Užsakymai{% endblock %}
+{% block title %}{% trans "Order Detail View" %}{% endblock %}
 
 {% block content %}
 
-<h4>Užsakymo numeris: {{ uzsakymas.id }}</h4>
-<p><b>Klientas: </b>{{ uzsakymas.automobilis.klientas}}</p>
-<p><b>Valstybiniai numeriai: </b>{{ uzsakymas.automobilis.valstybinis_nr }}</p>
-<p><b>Data: </b>{{ uzsakymas.data }}</p>
-<p><b>Gražinti iki: </b>{{ uzsakymas.terminas }}</p>
-<p><b>Vartotojas: </b>{{ uzsakymas.vartotojas }}</p>
-<p><b>Užsakymo būsena: </b>{{ uzsakymas.get_status_display }}</p>
+<h4>{% trans "Order number:" %} {{ uzsakymas.id }}</h4>
+<p><b>{% trans "Client:" %} </b>{{ uzsakymas.automobilis.klientas}}</p>
+<p><b>{% trans "Licence plate number:" %} </b>{{ uzsakymas.automobilis.valstybinis_nr }}</p>
+<p><b>{% trans "Order date:" %} </b>{{ uzsakymas.data }}</p>
+<p><b>{% trans "Due back:" %} </b>{{ uzsakymas.terminas }}</p>
+<p><b>{% trans "User:" %} </b>{{ uzsakymas.vartotojas }}</p>
+<p><b>{% trans "Status:" %} </b>{{ uzsakymas.get_status_display }}</p>
 <hr>
 {% if uzsakymas.vartotojas == user %}
 <div>
-    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'redaguoti-uzsakyma' uzsakymas.id %}">Redaguoti</a>
-    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'trinti-uzsakyma' uzsakymas.id %}">Ištrinti</a>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'redaguoti-uzsakyma' uzsakymas.id %}">{% trans "Edit:" %}</a>
+    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'trinti-uzsakyma' uzsakymas.id %}">{% trans "Delete:" %}</a>
 </div>
 {% endif %}
 
 <table class="table table-hover">
   <thead>
     <tr class="table-info">
-      <th scope="col">Paslaugos pavadinimas:</th>
-      <th scope="col">Kiekis</th>
-      <th scope="col">Kaina</th>
-      <th scope="col">Viso:</th>
+      <th scope="col">{% trans "Service title:" %}</th>
+      <th scope="col">{% trans "Amount:" %}</th>
+      <th scope="col">{% trans "Price:" %}</th>
+      <th scope="col">{% trans "Sum:" %}</th>
     </tr>
   </thead>
   <tbody>
@@ -38,13 +38,13 @@
     </tr>
   {% endfor %}
   <tr class="table-active">
-      <td colspan="3"><i><b>Bendra paslaugų suma: </b></i></td>
+      <td colspan="3"><i><b>{% trans "TOTAL:" %}</b></i></td>
       <th><i>{{uzsakymas.suma}}</i></th>
   </tr>
   </tbody>
 </table>
 
-<h4>Atsiliepimai:</h4>
+<h4>{% trans "Comments:" %}</h4>
 {% if uzsakymas.atsiliepimai.all %}
 {% for atsiliepimas in uzsakymas.atsiliepimai.all %}
       <hr>
@@ -52,12 +52,12 @@
       <p>{{ atsiliepimas.atsiliepimas }}</p>
     {% endfor %}
   {% else %}
-    <p>Atsiliepimų dar nėra.</p>
+    <p>{% trans "No Comments Yet" %}</p>
   {% endif %}
 {% if user.is_authenticated %}
 <div class="fieldWrapper">
     <hr>
-    <h4>Palikite atsiliepimą:</h4>
+    <h4>{% trans "Leave a Comment:" %}</h4>
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
