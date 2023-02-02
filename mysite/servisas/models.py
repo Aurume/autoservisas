@@ -11,19 +11,20 @@ from datetime import date, datetime
 import pytz
 from tinymce.models import HTMLField
 from PIL import Image
+from django.utils.translation import gettext_lazy as _
 
 utc = pytz.UTC
 
 class AutomobilioModelis(models.Model):
-    marke = models.CharField(verbose_name='Automobilio markė', max_length=80, help_text='Įveskite automobilio markę')
-    modelis = models.CharField('Automobilio modelis', max_length=80, help_text='Įveskite automobilio modelį')
+    marke = models.CharField(verbose_name=_('make'), max_length=80, help_text='Įveskite automobilio markę')
+    modelis = models.CharField(_('model'), max_length=80, help_text='Įveskite automobilio modelį')
 
     def __str__(self):
         return f"{self.marke} {self.modelis}"
 
     class Meta:
-        verbose_name = "Automobilio modelis" # atvaizduojams pavadinimas vienaskaita
-        verbose_name_plural = "Automobilio modeliai"# kad atvaizudotu teisingai daugiskaita
+        verbose_name = _("Car model") # atvaizduojams pavadinimas vienaskaita
+        verbose_name_plural = _("Car models")# kad atvaizudotu teisingai daugiskaita
 
 
 class Automobilis(models.Model):
@@ -43,16 +44,16 @@ class Automobilis(models.Model):
     #     return reverse('book-detail', args=[str(self.id)])
 
     class Meta:
-        verbose_name = 'Automobilis'
-        verbose_name_plural = 'Automobiliai'
+        verbose_name = _('Car')
+        verbose_name_plural = _('Cars')
 
 class Uzsakymas(models.Model):
     """Modelis, aprašantis automobilių taisymo užsakymus"""
     #id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unikalus ID')
-    data = models.DateTimeField(verbose_name='Data', auto_now_add=True, max_length=20, help_text='Užsakymo data?')
-    automobilis = models.ForeignKey(to="Automobilis", on_delete=models.SET_NULL, null=True, blank=True)
-    terminas = models.DateTimeField(verbose_name='Grąžinti iki:', null=True, blank=True)
-    vartotojas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    data = models.DateTimeField(verbose_name=_('Date'), auto_now_add=True, max_length=20, help_text='Užsakymo data?')
+    automobilis = models.ForeignKey(to="Automobilis", verbose_name=_('Car'), on_delete=models.SET_NULL, null=True, blank=True)
+    terminas = models.DateTimeField(verbose_name=_('Due back:'), null=True, blank=True)
+    vartotojas = models.ForeignKey(User, verbose_name=_("User"), on_delete=models.SET_NULL, null=True, blank=True)
 
     # def baigesi_laikas(self):
     #     if self.terminas:
@@ -71,10 +72,10 @@ class Uzsakymas(models.Model):
 
 
     LOAN_STATUS = (
-        ('p', 'Patvirtinta'),
-        ('v', 'Vykdoma'),
-        ('a', 'Atšaukta'),
-        ('i', 'Įvykdyta'),
+        ('p', _('Confirmed')),
+        ('v', _('In Progress')),
+        ('a', _('Cancelled')),
+        ('i', _('Done')),
     )
 
     status = models.CharField(
@@ -82,7 +83,7 @@ class Uzsakymas(models.Model):
         choices=LOAN_STATUS,
         blank=True,
         default='p',
-        help_text='Statusas',
+        help_text=_('Status'),
     )
 
     def suma(self):
@@ -96,26 +97,26 @@ class Uzsakymas(models.Model):
         return f"{self.automobilis} ({self.terminas})"
 
     class Meta:
-        verbose_name = "Užsakymas"
-        verbose_name_plural = "Užsakymai"
+        verbose_name = _("Order")
+        verbose_name_plural = _("Orders")
 
 
 class Paslauga(models.Model):
     """Modelis aprašo serviso teikiamas paslaugas"""
-    pavadinimas = models.CharField(verbose_name='Paslaugos pavadinimas', max_length=100, help_text='Įveskite paslaugos pavadinimą ')
-    kaina = models.FloatField(verbose_name='Paslaugos kaina', max_length=20)
+    pavadinimas = models.CharField(verbose_name=_('Service title'), max_length=100, help_text='Įveskite paslaugos pavadinimą ')
+    kaina = models.FloatField(verbose_name=_('Service cost'), max_length=20)
 
     def __str__(self):
         return f"{self.pavadinimas}"
 
     class Meta:
-        verbose_name = 'Paslauga'
-        verbose_name_plural = 'Paslaugos'
+        verbose_name = _('Service')
+        verbose_name_plural = _('Services')
 
 class Uzsakymo_eilute(models.Model):
-    paslauga = models.ForeignKey(to='Paslauga', on_delete=models.SET_NULL, null=True)
-    uzsakymas = models.ForeignKey(to='Uzsakymas', on_delete=models.CASCADE, related_name="eilutes") #related tam, kad suma paskaiciuoti
-    kiekis = models.IntegerField(verbose_name='Kiekis')
+    paslauga = models.ForeignKey(to='Paslauga', verbose_name=_('Service'), on_delete=models.SET_NULL, null=True)
+    uzsakymas = models.ForeignKey(to='Uzsakymas', verbose_name=_('Order'), on_delete=models.CASCADE, related_name="eilutes") #related tam, kad suma paskaiciuoti
+    kiekis = models.IntegerField(verbose_name=_('Amount'))
 
     def kaina(self):
         return self.paslauga.kaina * self.kiekis
@@ -124,30 +125,30 @@ class Uzsakymo_eilute(models.Model):
         return f"{self.uzsakymas.data}, {self.paslauga} ({self.kiekis})"
 
     class Meta:
-        verbose_name = 'Užsakymo eilutė'
-        verbose_name_plural = 'Užsakymo eilutės'
+        verbose_name = _('Orderline')
+        verbose_name_plural = _('Orderlines')
 
 class UzsakymoApzvalga(models.Model):
-    uzsakymas = models.ForeignKey(Uzsakymas, verbose_name="Užsakymas", on_delete=models.SET_NULL, null=True, blank=True, related_name='atsiliepimai')
-    vartotojas = models.ForeignKey(get_user_model(), verbose_name="Vartotojas", on_delete=models.SET_NULL, null=True, blank=True, related_name='vartotojas')
+    uzsakymas = models.ForeignKey(Uzsakymas, verbose_name=_('Order'), on_delete=models.SET_NULL, null=True, blank=True, related_name='atsiliepimai')
+    vartotojas = models.ForeignKey(get_user_model(), verbose_name=_('User'), on_delete=models.SET_NULL, null=True, blank=True, related_name='vartotojas')
     date_created = models.DateTimeField('Sukūrimo data', auto_now_add=True)
     atsiliepimas = models.TextField('Atsiliepimas', max_length=2000)
 
     class Meta:
-        verbose_name = "Atsiliepimas"
-        verbose_name_plural = 'Atsiliepimai'
+        verbose_name = _("Comment")
+        verbose_name_plural = _('Comments')
         ordering = ['-date_created']
 
     def __str__(self) -> str:
         return f"{self.vartotojas} on {self.uzsakymas} at {self.date_created}"
 
 class Profilis(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    foto = models.ImageField(default="default.png", upload_to="profile_pics")
+    user = models.OneToOneField(User, verbose_name=_('User'), on_delete=models.CASCADE)
+    foto = models.ImageField(default="default.png", verbose_name=_('Photo'), upload_to="profile_pics")
 
     class Meta:
-        verbose_name = "Profilis"
-        verbose_name_plural = 'Profiliai'
+        verbose_name = _("Profile")
+        verbose_name_plural = _('Profiles')
 
     def __str__(self):
         return f"{self.user.username} profilis"
