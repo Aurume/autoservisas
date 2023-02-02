@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-01 13:00+0200\n"
-"PO-Revision-Date: 2023-02-01 13:09+0200\n"
+"POT-Creation-Date: 2023-02-02 12:15+0200\n"
+"PO-Revision-Date: 2023-02-02 12:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: lt\n"
@@ -20,26 +20,98 @@ msgstr ""
 "1 : n % 1 != 0 ? 2: 3);\n"
 "X-Generator: Poedit 3.2.2\n"
 
-#: .\templates\index.html:7
-msgid "Welcome to 'Pipiro' autoservice!"
-msgstr "Sveiki atvykę į 'Pipiro' autoservisą!"
+#: .\models.py:53
+msgid "Date"
+msgstr "Data"
 
-#: .\templates\index.html:8
-msgid "Our service statistics:"
-msgstr "Mūsų serviso statistika:"
+#: .\models.py:54
+msgid "Car"
+msgstr "Automobilis"
 
-#: .\templates\index.html:11
-msgid "Services already provided:"
-msgstr "Jau suteikta paslaugų:"
+#: .\models.py:55
+msgid "Due back:"
+msgstr "Grąžinti iki:"
 
-#: .\templates\index.html:12
-msgid "Orders fulfilled:"
-msgstr "Įvykdyta užsakymų:"
+#: .\models.py:56 .\models.py:133 .\models.py:146
+msgid "User"
+msgstr "Vartotojas"
 
-#: .\templates\index.html:13
-msgid "Cars/Customers Serviced:"
-msgstr "Aptarnauta automobilių/klientų:"
+#: .\models.py:75
+msgid "Confirmed"
+msgstr "Patvirtinta"
 
-#: .\templates\index.html:15
-msgid "Your visits: "
-msgstr "Jūsų apsilankymai: "
+#: .\models.py:76
+msgid "In Progress"
+msgstr "Vykdoma"
+
+#: .\models.py:77
+msgid "Cancelled"
+msgstr "Atšaukta"
+
+#: .\models.py:78
+msgid "Done"
+msgstr "Įvykdyta"
+
+#: .\models.py:86
+msgid "Status"
+msgstr "Statusas"
+
+#: .\models.py:100 .\models.py:118 .\models.py:132
+msgid "Order"
+msgstr "Užsakymas"
+
+#: .\models.py:101
+msgid "Orders"
+msgstr "Užsakymai"
+
+#: .\models.py:106
+msgid "Service title"
+msgstr "Paslaugos pavadinimas"
+
+#: .\models.py:107
+msgid "Service cost"
+msgstr "Paslaugos kaina"
+
+#: .\models.py:113 .\models.py:117
+msgid "Service"
+msgstr "Paslauga"
+
+#: .\models.py:114
+msgid "Services"
+msgstr "Paslaugos"
+
+#: .\models.py:119
+msgid "Amount"
+msgstr "Kiekis"
+
+#: .\models.py:128
+msgid "Orderline"
+msgstr "Užsakymo eilutė"
+
+#: .\models.py:129
+msgid "Orderlines"
+msgstr "Užsakymo eilutės"
+
+#: .\models.py:134
+msgid "Date created"
+msgstr "Sukūrimo data"
+
+#: .\models.py:135 .\models.py:138
+msgid "Comment"
+msgstr "Atsiliepimas"
+
+#: .\models.py:139
+msgid "Comments"
+msgstr "Atsiliepimai"
+
+#: .\models.py:147
+msgid "Photo"
+msgstr "Nuotrauka"
+
+#: .\models.py:150
+msgid "Profile"
+msgstr "Profilis"
+
+#: .\models.py:151
+msgid "Profiles"
+msgstr "Profiliai"
