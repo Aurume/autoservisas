@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 12:15+0200\n"
-"PO-Revision-Date: 2023-02-02 12:16+0200\n"
+"POT-Creation-Date: 2023-02-02 13:20+0200\n"
+"PO-Revision-Date: 2023-02-02 13:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: lt\n"
@@ -20,13 +20,33 @@ msgstr ""
 "1 : n % 1 != 0 ? 2: 3);\n"
 "X-Generator: Poedit 3.2.2\n"
 
+#: .\models.py:19
+msgid "make"
+msgstr "marke"
+
+#: .\models.py:20
+msgid "model"
+msgstr "modelis"
+
+#: .\models.py:26
+msgid "Car model"
+msgstr "Automobilio modelis"
+
+#: .\models.py:27
+msgid "Car models"
+msgstr "Automobilio modeliai"
+
+#: .\models.py:47 .\models.py:54
+msgid "Car"
+msgstr "Automobilis"
+
+#: .\models.py:48
+msgid "Cars"
+msgstr "Automobiliai"
+
 #: .\models.py:53
 msgid "Date"
 msgstr "Data"
-
-#: .\models.py:54
-msgid "Car"
-msgstr "Automobilis"
 
 #: .\models.py:55
 msgid "Due back:"
@@ -92,11 +112,7 @@ msgstr "Užsakymo eilutė"
 msgid "Orderlines"
 msgstr "Užsakymo eilutės"
 
-#: .\models.py:134
-msgid "Date created"
-msgstr "Sukūrimo data"
-
-#: .\models.py:135 .\models.py:138
+#: .\models.py:138
 msgid "Comment"
 msgstr "Atsiliepimas"
 
@@ -115,3 +131,30 @@ msgstr "Profilis"
 #: .\models.py:151
 msgid "Profiles"
 msgstr "Profiliai"
+
+#: .\templates\index.html:7
+msgid "Welcome to 'Pipiro' autoservice!"
+msgstr "Sveiki atvykę į 'Pipiro' autoservisą!"
+
+#: .\templates\index.html:8
+msgid "Our service statistics:"
+msgstr "Mūsų serviso statistika:"
+
+#: .\templates\index.html:11
+msgid "Services already provided:"
+msgstr "Jau suteikta paslaugų:"
+
+#: .\templates\index.html:12
+msgid "Orders fulfilled:"
+msgstr "Įvykdyta užsakymų:"
+
+#: .\templates\index.html:13
+msgid "Cars/Customers Serviced:"
+msgstr "Aptarnauta automobilių/klientų:"
+
+#: .\templates\index.html:15
+msgid "Your visits: "
+msgstr "Jūsų apsilankymai: "
+
+#~ msgid "Date created"
+#~ msgstr "Sukūrimo data"

@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 
@@ -16,4 +16,5 @@ urlpatterns = [
     path('uzsakymai/sukurti', views.UzsakymaiVartotojoCreateView.as_view(), name='sukurti-nauja'),
     path('uzsakymai/<int:pk>/redaguoti', views.UzsakymaiVartotojoUpdateView.as_view(), name='redaguoti-uzsakyma'),
     path('uzsakymai/<int:pk>/trinti', views.UzsakymaiVartotojoDeleteView.as_view(), name='trinti-uzsakyma'),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
