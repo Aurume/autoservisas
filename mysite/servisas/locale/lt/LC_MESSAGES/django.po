@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 14:33+0200\n"
-"PO-Revision-Date: 2023-02-02 14:34+0200\n"
+"POT-Creation-Date: 2023-02-02 16:01+0200\n"
+"PO-Revision-Date: 2023-02-02 16:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: lt\n"
@@ -216,11 +216,11 @@ msgstr "Vartotojas:"
 msgid "Status:"
 msgstr "Būsena:"
 
-#: .\templates\uzsakymas.html:17
+#: .\templates\uzsakymas.html:17 .\templates\uzsakymas.html:45
 msgid "Edit:"
 msgstr "Redaguoti:"
 
-#: .\templates\uzsakymas.html:18
+#: .\templates\uzsakymas.html:18 .\templates\uzsakymas.html:46
 msgid "Delete:"
 msgstr "Ištrinti:"
 
@@ -240,23 +240,27 @@ msgstr "Kaina:"
 msgid "Sum:"
 msgstr "Viso:"
 
-#: .\templates\uzsakymas.html:41
+#: .\templates\uzsakymas.html:53
 msgid "TOTAL:"
 msgstr "Bendra paslaugų suma:"
 
-#: .\templates\uzsakymas.html:47
+#: .\templates\uzsakymas.html:59
+msgid "Add line:"
+msgstr "Pridėti eilutę:"
+
+#: .\templates\uzsakymas.html:62
 msgid "Comments:"
 msgstr "Atsiliepimai:"
 
-#: .\templates\uzsakymas.html:55
+#: .\templates\uzsakymas.html:70
 msgid "No Comments Yet"
 msgstr "Atsiliepimų dar nėra"
 
-#: .\templates\uzsakymas.html:60
+#: .\templates\uzsakymas.html:75
 msgid "Leave a Comment:"
 msgstr "Palikite atsiliepimą:"
 
-#: .\templates\uzsakymas.html:64
+#: .\templates\uzsakymas.html:79
 msgid "Send"
 msgstr "Siųsti"
 

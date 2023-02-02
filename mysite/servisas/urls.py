@@ -17,4 +17,7 @@ urlpatterns = [
     path('uzsakymai/<int:pk>/redaguoti', views.UzsakymaiVartotojoUpdateView.as_view(), name='redaguoti-uzsakyma'),
     path('uzsakymai/<int:pk>/trinti', views.UzsakymaiVartotojoDeleteView.as_view(), name='trinti-uzsakyma'),
     path('i18n/', include('django.conf.urls.i18n')),
+    path("uzsakymai/<int:uzsakymas_pk>/redaguotieilute/<int:pk>", views.UzsakymoEiluteUpdateView.as_view(), name="uzsakymas_redaguotieilute"),
+    path("uzsakymai/<int:uzsakymas_pk>/istrintieilute/<int:pk>", views.UzsakymoEiluteDeleteView.as_view(), name="uzsakymas_istrintieilute"),
+    path("uzsakymai/<int:pk>/pridetieilute", views.UzsakymoEiluteCreateView.as_view(), name="uzsakymas_pridetieilute"),
 ]

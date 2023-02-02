@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from .forms import UzsakymoApzvalgaForm, UserUpdateForm, ProfilisUpdateForm, UzsakymaiVartotojoCreateUpdateForm
 from django.views.generic.edit import FormMixin
-from .models import Automobilis, Paslauga, Uzsakymas
+from .models import Automobilis, Paslauga, Uzsakymas, Uzsakymo_eilute
 from django.views import generic
 from django.shortcuts import redirect
 from django.contrib.auth.forms import User
@@ -76,7 +76,7 @@ class UzsakymasDetailView(FormMixin, generic.DetailView): #  ar tikrai sita klas
         form.instance.uzsakymas = self.get_object()
         form.instance.vartotojas = self.request.user
         form.save()
-        messages.success(self.request, 'Atsiliepimas sėkmingai nusiųstas!')
+        #messages.success(self.request, 'Atsiliepimas sėkmingai nusiųstas!')
         return super(UzsakymasDetailView, self).form_valid(form)
 
 
@@ -209,4 +209,49 @@ class UzsakymaiVartotojoDeleteView(LoginRequiredMixin, UserPassesTestMixin, gene
         uzsakymas = self.get_object()
         return self.request.user == uzsakymas.vartotojas
 
+class UzsakymoEiluteCreateView(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
+    model = Uzsakymo_eilute
+    fields = ['paslauga', 'kiekis']
+    template_name = "uzsakymoeilute_form.html"
+
+    def get_success_url(self):
+        return reverse("uzsakymas", kwargs={"pk": self.kwargs['pk']})
+
+    def form_valid(self, form):
+        form.instance.uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['pk'])
+        form.save()
+        return super().form_valid(form)
+
+    def test_func(self):
+        uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['pk'])
+        return self.request.user == uzsakymas.vartotojas
+
+class UzsakymoEiluteUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    model = Uzsakymo_eilute
+    fields = ['paslauga', 'kiekis']
+    template_name = "uzsakymoeilute_form.html"
+
+    def get_success_url(self):
+        return reverse("uzsakymas", kwargs={"pk": self.kwargs['uzsakymas_pk']})
+
+    def form_valid(self, form):
+        form.instance.uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['uzsakymas_pk'])
+        form.save()
+        return super().form_valid(form)
+
+    def test_func(self):
+        uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['uzsakymas_pk'])
+        return self.request.user == uzsakymas.vartotojas
+
+class UzsakymoEiluteDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = Uzsakymo_eilute
+    template_name = "uzsakymoeilute_delete.html"
+    context_object_name = "uzsakymoeilute"
+
+    def get_success_url(self):
+        return reverse("uzsakymas", kwargs={"pk": self.kwargs['uzsakymas_pk']})
+
+    def test_func(self):
+        uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['uzsakymas_pk'])
+        return self.request.user == uzsakymas.vartotojas
 

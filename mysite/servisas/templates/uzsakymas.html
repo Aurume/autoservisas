@@ -26,7 +26,11 @@
       <th scope="col">{% trans "Amount:" %}</th>
       <th scope="col">{% trans "Price:" %}</th>
       <th scope="col">{% trans "Sum:" %}</th>
+      {% if uzsakymas.vartotojas == user %}
+      <th scope="col"></th>
+      {% endif%}
     </tr>
+
   </thead>
   <tbody>
   {% for eilute in uzsakymas.eilutes.all %}
@@ -35,6 +39,14 @@
       <td>{{eilute.kiekis}}</td>
       <td>{{eilute.paslauga.kaina}}</td>
       <td>{{eilute.kaina}}</td>
+      {% if uzsakymas.vartotojas == user %}
+       <td scope="row">
+           <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'uzsakymas_redaguotieilute' uzsakymas.id eilute.id %}">{% trans "Edit:" %}</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'uzsakymas_istrintieilute' uzsakymas.id eilute.id %}">{% trans "Delete:" %}</a>
+            </div>
+        </td>
+       {% endif %}
     </tr>
   {% endfor %}
   <tr class="table-active">
@@ -43,7 +55,12 @@
   </tr>
   </tbody>
 </table>
-
+{% if uzsakymas.vartotojas == user %}
+<div>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'uzsakymas_pridetieilute' uzsakymas.id %}">{% trans "Add line:" %}</a>
+</div>
+{% endif %}
+<br/>
 <h4>{% trans "Comments:" %}</h4>
 {% if uzsakymas.atsiliepimai.all %}
 {% for atsiliepimas in uzsakymas.atsiliepimai.all %}
