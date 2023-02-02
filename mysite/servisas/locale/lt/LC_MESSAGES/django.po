@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-02 13:53+0200\n"
-"PO-Revision-Date: 2023-02-02 13:59+0200\n"
+"POT-Creation-Date: 2023-02-02 14:33+0200\n"
+"PO-Revision-Date: 2023-02-02 14:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: lt\n"
@@ -40,7 +40,7 @@ msgstr "Automobilio modeliai"
 msgid "Car"
 msgstr "Automobilis"
 
-#: .\models.py:48
+#: .\models.py:48 .\templates\base.html:31
 msgid "Cars"
 msgstr "Automobiliai"
 
@@ -80,7 +80,7 @@ msgstr "Statusas"
 msgid "Order"
 msgstr "Užsakymas"
 
-#: .\models.py:101
+#: .\models.py:101 .\templates\base.html:32
 msgid "Orders"
 msgstr "Užsakymai"
 
@@ -131,6 +131,38 @@ msgstr "Profilis"
 #: .\models.py:151
 msgid "Profiles"
 msgstr "Profiliai"
+
+#: .\templates\base.html:18
+msgid "Pepper Autoservice"
+msgstr "Pipiro servisas"
+
+#: .\templates\base.html:30
+msgid "Home"
+msgstr "Pradžia"
+
+#: .\templates\base.html:41
+msgid "My Orders"
+msgstr "Mano užsakymai"
+
+#: .\templates\base.html:42
+msgid "New Order"
+msgstr "Naujas užsakymas"
+
+#: .\templates\base.html:43
+msgid "Logout"
+msgstr "Atsijungti"
+
+#: .\templates\base.html:45
+msgid "Register"
+msgstr "Registracija"
+
+#: .\templates\base.html:46
+msgid "Login"
+msgstr "Prisijungti"
+
+#: .\templates\base.html:50
+msgid "Search"
+msgstr "Paieška"
 
 #: .\templates\index.html:7
 msgid "Welcome to 'Pipiro' autoservice!"
@@ -223,6 +255,10 @@ msgstr "Atsiliepimų dar nėra"
 #: .\templates\uzsakymas.html:60
 msgid "Leave a Comment:"
 msgstr "Palikite atsiliepimą:"
+
+#: .\templates\uzsakymas.html:64
+msgid "Send"
+msgstr "Siųsti"
 
 #~ msgid "Date created"
 #~ msgstr "Sukūrimo data"

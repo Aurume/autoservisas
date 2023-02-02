@@ -61,7 +61,7 @@
     <form action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Siųsti">
+        <input type="submit" value="{% trans 'Send' %}">
     </form>
 </div>
 {% endif %}
