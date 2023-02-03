@@ -132,7 +132,7 @@ class UzsakymoApzvalga(models.Model):
     uzsakymas = models.ForeignKey(Uzsakymas, verbose_name=_('Order'), on_delete=models.SET_NULL, null=True, blank=True, related_name='atsiliepimai')
     vartotojas = models.ForeignKey(get_user_model(), verbose_name=_('User'), on_delete=models.SET_NULL, null=True, blank=True, related_name='vartotojas')
     date_created = models.DateTimeField('Sukūrimo data', auto_now_add=True)
-    atsiliepimas = models.TextField('Atsiliepimas', max_length=2000)
+    atsiliepimas = models.TextField('Atsiliepimas', max_length=2000) #nepadeda jei istrinu
 
     class Meta:
         verbose_name = _("Comment")

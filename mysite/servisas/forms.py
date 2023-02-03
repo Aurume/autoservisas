@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class UzsakymoApzvalgaForm(forms.ModelForm):
     class Meta:
         model = UzsakymoApzvalga
-        fields = ('uzsakymas', 'vartotojas', 'atsiliepimas')
+        fields = ('uzsakymas', 'vartotojas', 'atsiliepimas') # ir cia istrynus, dingsta visa forma
         widgets = {'uzsakymas': forms.HiddenInput(), 'vartotojas': forms.HiddenInput()}
 
 class UserUpdateForm(forms.ModelForm):
