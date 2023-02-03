@@ -1,13 +1,43 @@
 {% extends "base.html" %}
 
-{% block title %}Automobiliai{% endblock %}
-{% block content %}
-  <h1>Automobiliai</h1>
-  <p>Mūsų aptarnauti automobiliai:</p>
-  {% for automobilis in automobiliai %}
+{% block title %}Automobilis{% endblock %}
 
-    <li><a href="{% url 'automobilis' automobilis.id %}">{{ automobilis.automobilio_modelis }}</a></li>
-    {% endfor %}
+{% block content %}
+{% load static %}
+
+<div class="row">
+{% for automobilis in automobiliai %}
+<div class="col-md-4 d-flex align-items-stretch">
+<div class="card mb-4 shadow-sm">
+{% if automobilis.virselis %}
+  <img src="{{ automobilis.virselis.url }}" class="card-img-top" alt="...">
+{% else %}
+  <img src="{% static 'img/no-image.png' %}" class="card-img-top">
+{% endif %}
+
+<div class="card-body">
+<h6 class="card-text"><a href="{% url 'automobilis' automobilis.id %}">{{automobilis.automobilio_modelis }}</a></h6>
+<p class="card-subtitle mb-2 text-muted">{{ automobilis.valstybinis_nr }}</p>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+<hr>
+<p>{{ automobilis.description | safe }}</p>
+<hr>
+</br>
+
+
+
+
+
+
+
+
+
+
 <div class="container puslapiai">
     <nav aria-label="...">
         {% if automobiliai.has_other_pages %}

@@ -35,7 +35,7 @@ def index(request):
     return render(request, 'index.html', context=context)
 
 def automobiliai(request):
-    paginator = Paginator(Automobilis.objects.all(), 2) # po kiek vienam psl noriu kad rodytu auto
+    paginator = Paginator(Automobilis.objects.all(), 3) # po kiek vienam psl noriu kad rodytu auto
     page_number = request.GET.get('page')
     paged_automobiliai = paginator.get_page(page_number)
     context = {
@@ -50,7 +50,7 @@ def automobilis(request, automobilis_id):
 class UzsakymaiListView(generic.ListView):
     model = Uzsakymas
     context_object_name = 'uzsakymai'
-    paginate_by = 2
+    paginate_by = 3
     template_name = 'uzsakymai.html'
 
 class UzsakymasDetailView(FormMixin, generic.DetailView): #  ar tikrai sita klase perrasyti reikia?
@@ -88,7 +88,7 @@ class UzsakymasDetailView(FormMixin, generic.DetailView): #  ar tikrai sita klas
 class VartotojoUzsakymasListView(LoginRequiredMixin, generic.ListView):
     model = Uzsakymas
     template_name = 'vartotojo_uzsakymai.html'
-    paginate_by = 2
+    paginate_by = 3
     context_object_name = "uzsakymai"
 
     def get_queryset(self):
