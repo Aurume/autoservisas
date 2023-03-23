@@ -154,7 +154,7 @@ def profilis(request):
     }
     return render(request, 'profilis.html', context)
 
-class VartotojoUzsakymaListView(LoginRequiredMixin, ListView):
+class VartotojoUzsakymaiListView(LoginRequiredMixin, ListView):
     model = Uzsakymas
     context_object_name = 'uzsakymas'
     template_name = 'vartotojo_uzsakymas.html'
